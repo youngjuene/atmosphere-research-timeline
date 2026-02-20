@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="app">
       <nav className="navbar">
-        <div className="brand">Piamo</div>
+        <div className="brand">Atmosphere</div>
         <div className="nav-links">
           <a href="#" className="active">Timeline</a>
           <a href="#">Papers</a>
