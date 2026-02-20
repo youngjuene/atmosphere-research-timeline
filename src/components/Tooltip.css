@@ -1,0 +1,58 @@
+.tooltip-container {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background-color: #1a202c;
+    /* Very dark gray/black */
+    color: white;
+    padding: 12px 14px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: max-content;
+    max-width: 300px;
+    /* Don't let it get too wide */
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    pointer-events: none;
+    /* Prevent tooltip from interfering with hover */
+    animation: fadeIn 0.15s ease-out;
+}
+
+.tooltip-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.tooltip-authors {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 11px;
+    color: #a0aec0;
+    /* Light gray */
+}
+
+.tooltip-meta {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 11px;
+    color: #a0aec0;
+    /* Light gray */
+    margin-top: 2px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, calc(-100% + 5px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -100%);
+    }
+}
