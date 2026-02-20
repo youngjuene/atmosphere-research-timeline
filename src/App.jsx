@@ -19,22 +19,24 @@ function App() {
 
       <div className="legend-bar">
         <div className="legend-section">
-          <div className="legend-title">Dataset</div>
+          <div className="legend-title">Timeline Zone</div>
           <div className="legend-items">
-            <span><strong>A</strong> Hand</span>
-            <span><strong>B</strong> Body</span>
-            <span><strong>C</strong> Hand+Body</span>
+            <span><strong>P</strong> Pre-disciplinary</span>
+            <span><strong>Ph</strong> Phenomenological</span>
+            <span><strong>F</strong> Field-formation</span>
+            <span><strong>D</strong> Diversification</span>
+            <span><strong>Fr</strong> Frontier</span>
           </div>
         </div>
         <div className="separator" style={{ width: '1px', backgroundColor: '#e2e8f0' }}></div>
         <div className="legend-section">
-          <div className="legend-title">Input format</div>
+          <div className="legend-title">Primary Tag</div>
           <div className="legend-items">
-            <span><strong>1</strong> Audio</span>
-            <span><strong>2</strong> MIDI</span>
-            <span><strong>3</strong> Score</span>
-            <span><strong>4</strong> Video</span>
-            <span><strong>5</strong> Fingering</span>
+            <span><strong>1</strong> Theoretical</span>
+            <span><strong>2</strong> Artistic</span>
+            <span><strong>3</strong> Empirical</span>
+            <span><strong>4</strong> Design-practice</span>
+            <span><strong>5</strong> Computational</span>
           </div>
         </div>
       </div>
@@ -97,7 +99,8 @@ function App() {
                       <div className={`node-label ${paper.position}`}>
                         <div className="paper-title">
                           {paper.title}
-                          {paper.note && <span className="paper-note">{paper.note}</span>}
+                          {paper.note1 && <span className="paper-note">{paper.note1}</span>}
+                          {paper.note2 && <span className="paper-note">{paper.note2}</span>}
                         </div>
                         <div className="paper-venue">{paper.venue}</div>
                       </div>

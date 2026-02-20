@@ -1,75 +1,63 @@
 export const categories = [
-  { id: 'dataset', name: 'Dataset', subName: '', bgColor: '#f1f5fb', borderColor: '#cad5ec' },
-  { id: 'hand_data', name: 'Hand Synth', subName: '(Data-Driven)', bgColor: '#fdf1f2', borderColor: '#f9c5cd' },
-  { id: 'hand_phys', name: 'Hand Synth', subName: '(Physics-Based)', bgColor: '#fdf7e8', borderColor: '#f8d298' },
-  { id: 'body', name: 'Body Synth', subName: '', bgColor: '#f0eef9', borderColor: '#cfc4ed' },
-  { id: 'preprocess', name: 'Pre-processing', subName: '', bgColor: '#e8fbef', borderColor: '#aee4c5' },
-  { id: 'foundations', name: 'Related Foundations', subName: '', bgColor: '#f1f5fb', borderColor: '#cad5ec' }
+  { id: 'phenomenological', name: 'Phenomenological &', subName: 'Theoretical Discourse', bgColor: '#f1f5fb', borderColor: '#cad5ec' },
+  { id: 'aesthetic', name: 'Aesthetic &', subName: 'Artistic Inquiry', bgColor: '#fdf1f2', borderColor: '#f9c5cd' },
+  { id: 'architectural', name: 'Architectural &', subName: 'Spatial Practice', bgColor: '#fdf7e8', borderColor: '#f8d298' },
+  { id: 'empirical', name: 'Empirical &', subName: 'Computational Methodologies', bgColor: '#f0eef9', borderColor: '#cfc4ed' }
 ];
 
 export const yearSpots = [
-  { year: 2009, label: '09', pos: 5 },
-  { year: 2010, label: '10', pos: 7 },
-  { year: 2013, label: '13', pos: 10 },
-  { year: 2017, label: '17', pos: 17 },
-  { year: 2018, label: '18', pos: 19 },
-  { year: 2019, label: '19', pos: 23 },
-  { year: 2020, label: '20', pos: 27 },
-  { year: 2021, label: '21', pos: 32 },
-  { year: 2022, label: '22', pos: 37 },
-  { year: 2023, label: '23', pos: 48 },
-  { year: 2024, label: '24', pos: 68 },
-  { year: 2025, label: '25', pos: 84 },
-  { year: 2026, label: '26', pos: 96 },
+  { year: 1927, label: '27', pos: 5 },
+  { year: 1945, label: '45', pos: 15 },
+  { year: 1969, label: '69', pos: 25 },
+  { year: 1977, label: '77', pos: 35 },
+  { year: 1979, label: '79', pos: 45 },
+  { year: 1995, label: '95', pos: 55 },
+  { year: 1996, label: '96', pos: 60 },
+  { year: 2002, label: '02', pos: 68 },
+  { year: 2006, label: '06', pos: 76 },
+  { year: 2014, label: '14', pos: 85 },
+  { year: 2018, label: '18', pos: 90 },
+  { year: 2024, label: '24', pos: 96 }
 ];
 
+// Mapping legends
+const zoneToNotePrimary = {
+  'pre-disciplinary': 'P',
+  'phenomenological': 'Ph',
+  'field-formation': 'F',
+  'diversification': 'D',
+  'frontier': 'Fr'
+};
+
+const tagPrimaryToNum = {
+  'theoretical': '1',
+  'artistic': '2',
+  'empirical': '3',
+  'design-practice': '4',
+  'computational': '5'
+};
+
 export const papers = [
-  // Dataset
-  { id: 'PiaMot10M_A', title: 'PiaMot10M', authors: 'Unknown Authors', venue: 'ICLR 2024', category: 'dataset', year: 2024.1, position: 'above', note: 'A' },
-  { id: 'FurElise_A', title: 'FürElise: Capturing and Physically Synthesizing Hand Motions of Piano Performance', authors: 'Wang, Xu, Shi, Schumann & Liu', venue: 'ACM SIGGRAPH Asia 2024', category: 'dataset', year: 2024.5, position: 'above', note: 'A' },
-  { id: 'MOSA_B', title: 'MOSA', authors: 'Unknown Authors', venue: 'IEEE TASLP 2024', category: 'dataset', year: 2023.8, position: 'below', note: 'B' },
-  { id: 'RP1M_A', title: 'RP1M: A Large-Scale Motion Dataset for Piano Playing with Bi-Manual Dexterous Robot Hands', authors: 'Wang et al.', venue: 'Conference on Robot Learning (CoRL) 2024', category: 'dataset', year: 2024.8, position: 'below', note: 'A' },
-  { id: 'Pianopus_C', title: 'Pianopus', authors: 'Unknown Authors', venue: 'Submitted ISMIR 2026', category: 'dataset', year: 2026.2, position: 'above', note: 'C' },
+  // Phenomenological & Theoretical Discourse
+  { id: 'HEIDEGGER1927', title: 'Being and Time', authors: 'Heidegger, Martin', venue: 'Niemeyer', category: 'phenomenological', year: 1927, position: 'above', note1: 'P', note2: '1' },
+  { id: 'MERLEAUPONTY1945', title: 'Phenomenology of Perception', authors: 'Merleau-Ponty, Maurice', venue: 'Gallimard', category: 'phenomenological', year: 1945, position: 'below', note1: 'P', note2: '1' },
+  { id: 'SCHMITZ1969', title: 'Der Gefühlsraum', authors: 'Schmitz, Hermann', venue: 'Bouvier', category: 'phenomenological', year: 1969, position: 'above', note1: 'Ph', note2: '1' },
+  { id: 'BOHME1995', title: 'Atmosphere Concept', authors: 'Böhme, Gernot', venue: 'Thesis Eleven', category: 'phenomenological', year: 1995, position: 'below', note1: 'F', note2: '1' },
 
+  // Aesthetic & Artistic Inquiry
+  { id: 'SCHAFER1977', title: 'The Soundscape', authors: 'Schafer, R. Murray', venue: 'Knopf', category: 'aesthetic', year: 1977, position: 'above', note1: 'Ph', note2: '2' },
 
-  // Hand Synth (Data-Driven)
-  { id: 'PianoCG_3', title: 'PianoCG', authors: 'Unknown Authors', venue: 'FCV 2009', category: 'hand_data', year: 2009, position: 'above', note: '3' },
-  { id: 'PianoAnim_2', title: 'PianoAnim', authors: 'Unknown Authors', venue: 'CAVW 2013', category: 'hand_data', year: 2013, position: 'below', note: '2' },
-  { id: 'PiaMot10M_1', title: 'PiaMot10M', authors: 'Unknown Authors', venue: 'ICLR 2024', category: 'hand_data', year: 2024.1, position: 'above', note: '1' },
-  { id: 'FurElise_2', title: 'FürElise: Capturing and Physically Synthesizing Hand Motions of Piano Performance', authors: 'Wang, Xu, Shi, Schumann & Liu', venue: 'ACM SIGGRAPH Asia 2024', category: 'hand_data', year: 2024.5, position: 'above', note: '2' },
-  { id: 'Sep2Collab_1', title: 'Sep2Collab', authors: 'Unknown Authors', venue: 'ACM MM 2024', category: 'hand_data', year: 2024.3, position: 'below', note: '1' },
-  { id: 'BACH_2', title: 'BACH', authors: 'Unknown Authors', venue: 'CAVW 2025', category: 'hand_data', year: 2025.2, position: 'below', note: '2' },
-  { id: 'Tipiano_2', title: 'Tipiano', authors: 'Unknown Authors', venue: 'Submitted Siggraph 2026', category: 'hand_data', year: 2026.8, position: 'above', note: '2' },
+  // Architectural & Spatial Practice
+  { id: 'PALLASMAA1996', title: 'Eyes of the Skin', authors: 'Pallasmaa, Juhani', venue: 'Wiley', category: 'architectural', year: 1996, position: 'above', note1: 'F', note2: '4' },
+  { id: 'ZUMTHOR2006', title: 'Atmospheres', authors: 'Zumthor, Peter', venue: 'Birkhäuser', category: 'architectural', year: 2006, position: 'below', note1: 'F', note2: '4' },
 
-  // Hand Synth (Physics-Based)
-  { id: 'HandMotion_5', title: 'Generating Natural Hand Motion in Playing Piano', authors: 'Hori et al.', venue: 'IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2010', category: 'hand_phys', year: 2010.5, position: 'above', note: '5' },
-  { id: 'RoboPianist_5', title: 'RoboPianist', authors: 'Unknown Authors', venue: 'CoRL 2023', category: 'hand_phys', year: 2023.5, position: 'below', note: '5' },
-  { id: 'PianoMime_4', title: 'PianoMime', authors: 'Unknown Authors', venue: 'CoRL 2024', category: 'hand_phys', year: 2024.6, position: 'above', note: '4' },
-  { id: 'RP1M_2_phys', title: 'RP1M: A Large-Scale Motion Dataset for Piano Playing with Bi-Manual Dexterous Robot Hands', authors: 'Wang et al.', venue: 'Conference on Robot Learning (CoRL) 2024', category: 'hand_phys', year: 2024.9, position: 'below', note: '2' },
-  { id: 'OmniPianist_2', title: 'OmniPianist', authors: 'Unknown Authors', venue: 'Submitted TPAMI', category: 'hand_phys', year: 2025.5, position: 'above', note: '2' },
-  { id: 'PANDORA_4', title: 'PANDORA', authors: 'Unknown Authors', venue: 'NeurIPS 2025', category: 'hand_phys', year: 2025.8, position: 'below', note: '4' },
-
-  // Body Synth
-  { id: 'Audio2Body', title: 'Audio2Body', authors: 'Unknown Authors', venue: 'CVPR 2018', category: 'body', year: 2018.5, position: 'above' },
-  { id: 'SkelPiano', title: 'SkelPiano', authors: 'Unknown Authors', venue: 'ISMIR 2018', category: 'body', year: 2018.5, position: 'below' },
-  { id: 'Pianoid', title: 'Pianoid', authors: 'Unknown Authors', venue: 'Submitted ISMIR 2026', category: 'body', year: 2026.5, position: 'below' },
-
-  // Pre-processing
-  { id: 'PianoHand', title: 'PianoHand', authors: 'Unknown Authors', venue: 'WACV 2023', category: 'preprocess', year: 2022.8, position: 'above' },
-  { id: 'HandMotionImputation', title: 'Hand Motion Imputation', authors: 'Unknown Authors', venue: 'ISB 2023', category: 'preprocess', year: 2023.6, position: 'below' },
-  { id: 'DLHandMotionImputation', title: 'DL based Hand Motion Imputation', authors: 'Unknown Authors', venue: 'Submitted EAAI 2026', category: 'preprocess', year: 2026.3, position: 'above' },
-
-  // Related Foundations
-  { id: 'MANO', title: 'MANO', authors: 'Unknown Authors', venue: 'SIG Asia 2017', category: 'foundations', year: 2017.5, position: 'below' },
-  { id: 'SMPLX', title: 'SMPL-X', authors: 'Unknown Authors', venue: 'CVPR 2019', category: 'foundations', year: 2019.2, position: 'above' },
-  { id: 'MediaPipe', title: 'MediaPipe', authors: 'Unknown Authors', venue: 'CVPR 2020', category: 'foundations', year: 2020.2, position: 'below' },
-  { id: 'AIST', title: 'AIST++', authors: 'Unknown Authors', venue: 'ICCV 2021', category: 'foundations', year: 2021.5, position: 'above' },
-  { id: 'Bailando', title: 'Bailando', authors: 'Unknown Authors', venue: 'CVPR 2022', category: 'foundations', year: 2022.5, position: 'below' },
-  { id: 'MDM', title: 'MDM', authors: 'Unknown Authors', venue: 'ICLR 2023', category: 'foundations', year: 2023.2, position: 'above' },
-  { id: 'ARCTIC', title: 'ARCTIC', authors: 'Unknown Authors', venue: 'CVPR 2023', category: 'foundations', year: 2023.5, position: 'below' },
-  { id: 'EDGE', title: 'EDGE', authors: 'Unknown Authors', venue: 'CVPR 2023', category: 'foundations', year: 2023.8, position: 'above' },
-  { id: 'FineDance', title: 'FineDance', authors: 'Unknown Authors', venue: 'ICCV 2023', category: 'foundations', year: 2024.2, position: 'above' },
-  { id: 'HaMeR', title: 'HaMeR', authors: 'Unknown Authors', venue: 'CVPR 2024', category: 'foundations', year: 2024.5, position: 'below' },
+  // Empirical & Computational Methodologies
+  { id: 'GIBSON1979', title: 'Ecological Approach', authors: 'Gibson, James J.', venue: 'Houghton Mifflin', category: 'empirical', year: 1979, position: 'above', note1: 'Ph', note2: '3' },
+  { id: 'THIBAUD2002', title: 'Urban Ambiances', authors: 'Thibaud, Jean-Paul', venue: 'Communications', category: 'empirical', year: 2002, position: 'below', note1: 'F', note2: '3' },
+  { id: 'ISO12913_1', title: 'ISO 12913-1', authors: 'ISO', venue: 'ISO', category: 'empirical', year: 2014, position: 'above', note1: 'D', note2: '3' },
+  { id: 'ISO12913_2', title: 'ISO 12913-2', authors: 'ISO', venue: 'ISO', category: 'empirical', year: 2018, position: 'above', note1: 'D', note2: '3' },
+  { id: 'ISO12913_3', title: 'ISO 12913-3', authors: 'ISO', venue: 'ISO', category: 'empirical', year: 2019, position: 'below', note1: 'D', note2: '3' },
+  { id: 'EMVOLIADIS2024', title: 'Multimodal Sensing', authors: 'Emvoliadis, A. et al.', venue: 'Sensors', category: 'empirical', year: 2024, position: 'above', note1: 'Fr', note2: '5' }
 ];
 
 export const getPercentageForYear = (year) => {
