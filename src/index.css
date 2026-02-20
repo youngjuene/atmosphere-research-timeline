@@ -89,7 +89,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: 1200px;
+  min-width: 1600px;
 }
 
 .year-header {
