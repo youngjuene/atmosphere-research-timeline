@@ -7,18 +7,18 @@ export const categories = [
 ];
 
 export const yearSpots = [
-  { year: 1927, label: '27', pos: 5 },
-  { year: 1934, label: '34', pos: 10 },
-  { year: 1945, label: '45', pos: 15 },
-  { year: 1959, label: '59', pos: 20 },
-  { year: 1969, label: '69', pos: 25 },
-  { year: 1977, label: '77', pos: 35 },
-  { year: 1995, label: '95', pos: 45 },
-  { year: 2004, label: '04', pos: 55 },
-  { year: 2009, label: '09', pos: 65 },
-  { year: 2014, label: '14', pos: 75 },
-  { year: 2018, label: '18', pos: 85 },
-  { year: 2025, label: '25', pos: 96 }
+  { year: 1927, label: '1927', pos: 5 },
+  { year: 1934, label: '1934', pos: 10 },
+  { year: 1945, label: '1945', pos: 15 },
+  { year: 1959, label: '1959', pos: 20 },
+  { year: 1969, label: '1969', pos: 25 },
+  { year: 1977, label: '1977', pos: 35 },
+  { year: 1995, label: '1995', pos: 45 },
+  { year: 2004, label: '2004', pos: 55 },
+  { year: 2009, label: '2009', pos: 65 },
+  { year: 2014, label: '2014', pos: 75 },
+  { year: 2018, label: '2018', pos: 85 },
+  { year: 2025, label: '2025', pos: 96 }
 ];
 
 // Mapping legends
