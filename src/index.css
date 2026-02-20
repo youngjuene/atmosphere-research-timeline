@@ -169,60 +169,80 @@ body {
 .paper-node {
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 10;
+  cursor: pointer;
 }
 
 .node-circle {
   width: 10px;
   height: 10px;
   background-color: white;
-  border: 2px solid #2d3748;
+  border: 1.5px solid #4a5568;
   border-radius: 50%;
-  cursor: pointer;
+  position: absolute;
+  z-index: 2;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.node-circle:hover {
-  transform: scale(1.3);
-  box-shadow: 0 0 0 4px rgba(45, 55, 72, 0.1);
+.paper-node:hover .node-circle {
+  transform: scale(1.4);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+  border-color: #2b6cb0;
 }
 
 .node-label {
   position: absolute;
-  font-family: var(--font-mono);
-  font-size: 11px;
   white-space: nowrap;
+  font-family: var(--font-mono);
   display: flex;
   flex-direction: column;
   align-items: center;
+  pointer-events: none;
 }
 
 .node-label.above {
-  bottom: 14px;
+  bottom: 12px;
 }
 
 .node-label.below {
-  top: 14px;
+  top: 12px;
+}
+
+/* Staggered classes for extra dense areas */
+.node-label.above-high {
+  bottom: 28px;
+}
+
+.node-label.above-highest {
+  bottom: 44px;
+}
+
+.node-label.below-low {
+  top: 28px;
+}
+
+.node-label.below-lowest {
+  top: 44px;
 }
 
 .paper-title {
+  font-size: 10.5px;
   color: #2d3748;
-  font-weight: 500;
 }
 
 .paper-note {
+  font-size: 8px;
   color: #718096;
-  font-size: 10px;
+  margin-left: 2px;
   vertical-align: super;
-  margin-left: 1px;
 }
 
 .paper-venue {
+  font-size: 9px;
   color: #718096;
-  font-size: 10px;
-  margin-top: 2px;
+  margin-top: 1px;
 }

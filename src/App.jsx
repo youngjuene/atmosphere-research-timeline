@@ -21,11 +21,11 @@ function App() {
         <div className="legend-section">
           <div className="legend-title">Timeline Zone</div>
           <div className="legend-items">
-            <span><strong>P</strong> Pre-disciplinary</span>
-            <span><strong>Ph</strong> Phenomenological</span>
-            <span><strong>F</strong> Field-formation</span>
-            <span><strong>D</strong> Diversification</span>
-            <span><strong>Fr</strong> Frontier</span>
+            <span><strong>P</strong> Pre-Disciplinary Roots</span>
+            <span><strong>Ph</strong> Phenomenological Turn</span>
+            <span><strong>F</strong> Field Formation</span>
+            <span><strong>M</strong> Methodological Diversification</span>
+            <span><strong>C</strong> Computational Frontier</span>
           </div>
         </div>
         <div className="separator" style={{ width: '1px', backgroundColor: '#e2e8f0' }}></div>
@@ -34,9 +34,10 @@ function App() {
           <div className="legend-items">
             <span><strong>1</strong> Theoretical</span>
             <span><strong>2</strong> Artistic</span>
-            <span><strong>3</strong> Empirical</span>
-            <span><strong>4</strong> Design-practice</span>
-            <span><strong>5</strong> Computational</span>
+            <span><strong>3</strong> Practice</span>
+            <span><strong>4</strong> Empirical</span>
+            <span><strong>5</strong> Methodological</span>
+            <span><strong>6</strong> Computational</span>
           </div>
         </div>
       </div>
