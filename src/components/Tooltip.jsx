@@ -1,11 +1,11 @@
 import React from 'react';
 import './Tooltip.css';
 
-const Tooltip = ({ paper }) => {
+const Tooltip = ({ paper, direction = 'above' }) => {
     if (!paper) return null;
 
     return (
-        <div className="tooltip-container">
+        <div className={`tooltip-container${direction === 'below' ? ' below' : ''}`}>
             <div className="tooltip-title">{paper.fullTitle || paper.title}</div>
             <div className="tooltip-authors">{paper.authors}</div>
             <div className="tooltip-meta">
@@ -19,7 +19,7 @@ const Tooltip = ({ paper }) => {
             )}
             {paper.url && (
                 <div className="tooltip-url">
-                    <a href={paper.url} target="_blank" rel="noreferrer" style={{ color: '#90cdf4', textDecoration: 'none' }}>View Source</a>
+                    <a href={paper.url} target="_blank" rel="noreferrer" style={{ color: '#90c2ff', textDecoration: 'none' }}>View Source</a>
                 </div>
             )}
         </div>

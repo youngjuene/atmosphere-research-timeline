@@ -1,13 +1,43 @@
 import React, { useState } from 'react';
 import { categories, papers, yearSpots, getPercentageForYear } from './data';
+import { computeLayout } from './layoutEngine';
 import Tooltip from './components/Tooltip';
 import './index.css';
 
+/** Vertical pixel distance from dot center to the near edge of each label slot */
+const SLOT_GAP = {
+  'above': 12, 'above-high': 46, 'above-highest': 80,
+  'below': 12, 'below-low': 46, 'below-lowest': 80,
+};
+
+const formatAPA = (authors, year) => {
+  const list = authors.split('; ');
+  const lastNames = list.map(a => a.split(', ')[0]);
+  const authorStr =
+    lastNames.length === 1 ? lastNames[0] :
+    lastNames.length === 2 ? `${lastNames[0]} & ${lastNames[1]}` :
+    `${lastNames[0]} et al.`;
+  return `${authorStr}, ${Math.floor(year)}`;
+};
+
+// Compute collision-free layouts for every category once (data is static)
+const categoryLayouts = Object.fromEntries(
+  categories.map(cat => [
+    cat.id,
+    computeLayout(papers.filter(p => p.category === cat.id), getPercentageForYear),
+  ])
+);
+
 function App() {
-  const [hoveredPaper, setHoveredPaper] = useState(null);
+  const [activePaper, setActivePaper] = useState(null);
+
+  const handleCircleClick = (e, paper) => {
+    e.stopPropagation();
+    setActivePaper(prev => prev?.id === paper.id ? null : paper);
+  };
 
   return (
-    <div className="app">
+    <div className="app" onClick={() => setActivePaper(null)}>
       <nav className="navbar">
         <div className="brand">Atmosphere</div>
         <div className="nav-links">
@@ -17,30 +47,6 @@ function App() {
         </div>
       </nav>
 
-      <div className="legend-bar">
-        <div className="legend-section">
-          <div className="legend-title">Timeline Zone</div>
-          <div className="legend-items">
-            <span><strong>P</strong> Pre-Disciplinary Roots</span>
-            <span><strong>Ph</strong> Phenomenological Turn</span>
-            <span><strong>F</strong> Field Formation</span>
-            <span><strong>M</strong> Methodological Diversification</span>
-            <span><strong>C</strong> Computational Frontier</span>
-          </div>
-        </div>
-        <div className="separator" style={{ width: '1px', backgroundColor: '#e2e8f0' }}></div>
-        <div className="legend-section">
-          <div className="legend-title">Primary Tag</div>
-          <div className="legend-items">
-            <span><strong>1</strong> Theoretical</span>
-            <span><strong>2</strong> Artistic</span>
-            <span><strong>3</strong> Practice</span>
-            <span><strong>4</strong> Empirical</span>
-            <span><strong>5</strong> Methodological</span>
-            <span><strong>6</strong> Computational</span>
-          </div>
-        </div>
-      </div>
 
       <div className="timeline-container">
         {/* Year Headers */}
@@ -56,64 +62,85 @@ function App() {
           ))}
         </div>
 
-        {/* Categories Rows */}
-        {categories.map((cat) => {
-          const categoryPapers = papers.filter(p => p.category === cat.id);
+        {/* Categories (Tracks) */}
+        <div className="class-group">
+          <div className="class-rows">
+            {categories.map((cat) => {
+              const categoryPapers = papers.filter(p => p.category === cat.id);
+              const { placements, rowHeight, centerOffset } = categoryLayouts[cat.id];
 
-          return (
-            <div
-              key={cat.id}
-              className="timeline-row"
-              style={{ backgroundColor: cat.bgColor }}
-            >
-              <div
-                className="category-label"
-                style={{ borderLeft: `6px solid ${cat.borderColor}`, backgroundColor: 'white' }}
-              >
-                <div className="category-name">{cat.name}</div>
-                {cat.subName && <div className="category-subname">{cat.subName}</div>}
-              </div>
-
-              <div className="row-content">
-                <div className="row-line"></div>
-
-                {/* Vertical grid lines extending down from years */}
-                {yearSpots.map(spot => (
+              return (
+                <div
+                  key={cat.id}
+                  className="timeline-row"
+                  style={{ backgroundColor: cat.bgColor, minHeight: rowHeight, '--row-center': `${centerOffset}px` }}
+                >
                   <div
-                    key={`grid-${spot.year}`}
-                    className="grid-line"
-                    style={{ left: `${spot.pos}%` }}
-                  ></div>
-                ))}
+                    className="category-label"
+                    style={{ borderLeft: `6px solid ${cat.borderColor}`, backgroundColor: 'white' }}
+                  >
+                    <div className="category-name">{cat.name}</div>
+                    {cat.subName && <div className="category-subname">{cat.subName}</div>}
+                  </div>
 
-                {/* Papers */}
-                {categoryPapers.map((paper) => {
-                  const leftPos = getPercentageForYear(paper.year);
-                  return (
-                    <div
-                      key={paper.id}
-                      className="paper-node"
-                      style={{ left: `${leftPos}%` }}
-                      onMouseEnter={() => setHoveredPaper(paper)}
-                      onMouseLeave={() => setHoveredPaper(null)}
-                    >
-                      <div className={`node-label ${paper.position}`}>
-                        <div className="paper-title">
-                          {paper.title}
-                          {paper.note1 && <span className="paper-note">{paper.note1}</span>}
-                          {paper.note2 && <span className="paper-note">{paper.note2}</span>}
+                  <div className="row-content">
+                    <div className="row-line"></div>
+
+                    {yearSpots.map(spot => (
+                      <div
+                        key={`grid-${spot.year}`}
+                        className="grid-line"
+                        style={{ left: `${spot.pos}%` }}
+                      ></div>
+                    ))}
+
+                    {categoryPapers.map((paper) => {
+                      const leftPos = getPercentageForYear(paper.year);
+                      const { position, labelOffset } = placements[paper.id] ?? { position: 'above', labelOffset: 0 };
+
+                      return (
+                        <div
+                          key={paper.id}
+                          className={`paper-node${activePaper?.id === paper.id ? ' active' : ''}`}
+                          style={{ left: `${leftPos}%` }}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div
+                            className={`node-label ${position}`}
+                            style={{ '--label-offset': `${labelOffset}px` }}
+                          >
+                            <div className="paper-title">
+                              {paper.title}
+                            </div>
+                            <div className="paper-venue">{formatAPA(paper.authors, paper.year)}</div>
+                          </div>
+                          {Math.abs(labelOffset) > 20 && (
+                            <svg className="label-connector">
+                              <line
+                                x1={0} y1={0}
+                                x2={labelOffset}
+                                y2={position.startsWith('above')
+                                  ? -(SLOT_GAP[position] ?? 12)
+                                  : (SLOT_GAP[position] ?? 12)}
+                              />
+                            </svg>
+                          )}
+                          {activePaper?.id === paper.id && (
+                            <Tooltip paper={paper} direction="below" />
+                          )}
+                          <div
+                            className="node-circle"
+                            onClick={(e) => handleCircleClick(e, paper)}
+                          ></div>
                         </div>
-                        <div className="paper-venue">{paper.venue}</div>
-                      </div>
-                      {hoveredPaper?.id === paper.id && <Tooltip paper={paper} />}
-                      <div className="node-circle"></div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
