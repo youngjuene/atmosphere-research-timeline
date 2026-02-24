@@ -89,15 +89,15 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: 2200px;
+  min-width: 2280px;
 }
 
 .year-header {
   display: flex;
   position: relative;
   height: 48px;
-  margin-left: 160px;
-  /* offset for category label (160px) */
+  margin-left: 240px;
+  /* offset for broad-track label (80px) + sub-track label (160px) */
   font-family: var(--font-mono);
   background-color: #f2f4f6;
 }
@@ -114,7 +114,11 @@ body {
 /* Broad class grouping */
 .class-group {
   display: flex;
-  border-bottom: 2px solid white;
+  border-bottom: 3px solid #d8dce2;
+}
+
+.class-group:last-child {
+  border-bottom: none;
 }
 
 .class-label {
@@ -125,12 +129,13 @@ body {
   justify-content: center;
   font-weight: 700;
   font-size: 12px;
-  color: #4e5968;
-  background-color: white;
-  border-right: 1px solid #e5e8eb;
+  color: #333d4b;
+  background-color: #f0f2f5;
+  border-right: 2px solid #d8dce2;
   writing-mode: vertical-lr;
   transform: rotate(180deg);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .class-rows {
@@ -171,14 +176,14 @@ body {
   position: relative;
 }
 
-/* Center line in each row */
+/* Center line in each row — colored by sub-track via CSS variable */
 .row-line {
   position: absolute;
   top: var(--row-center, 50%);
   left: 0;
   right: 0;
   height: 2px;
-  background-color: #6b7684;
+  background-color: var(--line-color, #6b7684);
   z-index: 1;
 }
 
@@ -208,26 +213,27 @@ body {
   width: 10px;
   height: 10px;
   background-color: white;
-  border: 1.5px solid #4e5968;
+  border: 2px solid var(--dot-color, #4e5968);
   border-radius: 50%;
   position: absolute;
   top: -5px;
   left: -5px;
   z-index: 2;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .paper-node:hover .node-circle {
   transform: scale(1.4);
-  box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.3);
-  border-color: #3182f6;
+  background-color: var(--dot-color, #3182f6);
+  border-color: var(--dot-color, #3182f6);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot-color, #3182f6) 25%, transparent);
 }
 
 .paper-node.active .node-circle {
   transform: scale(1.4);
-  background-color: #3182f6;
-  border-color: #3182f6;
-  box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.35);
+  background-color: var(--dot-color, #3182f6);
+  border-color: var(--dot-color, #3182f6);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot-color, #3182f6) 30%, transparent);
 }
 
 .node-label {

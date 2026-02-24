@@ -1,15 +1,22 @@
-export const broadClasses = [
-  { id: 'theory', name: 'Theory' },
-  { id: 'practice', name: 'Practice' },
-  { id: 'technology', name: 'Technology' },
+import jsonRaw from '../atmosphere_timeline_dataset.json';
+
+export const BROAD_TRACKS = [
+  { id: 'Philosophy',    label: 'Philosophy',    subTracks: ['Aesthetics', 'Phenomenology', 'Spatial Theory'] },
+  { id: 'Urban Studies', label: 'Urban Studies', subTracks: ['Spatial Theory', 'Sensory Studies', 'Environmental Psychology', 'Cultural Studies'] },
+  { id: 'Architecture',  label: 'Architecture',  subTracks: ['Architectural Theory', 'Spatial Theory', 'Cultural Studies'] },
+  { id: 'Computation',   label: 'Computation',   subTracks: ['Urban Systems'] },
 ];
 
-export const categories = [
-  { id: 'foundational', name: 'Foundational Theory',       broadClass: 'theory',     bgColor: '#e8f3ff', borderColor: '#c9e2ff' },
-  { id: 'architecture', name: 'Architecture & Design',     broadClass: 'practice',   bgColor: '#ffeeee', borderColor: '#ffd4d6' },
-  { id: 'urban',        name: 'Urban & Social Science',    broadClass: 'practice',   bgColor: '#fff9e7', borderColor: '#ffe69b' },
-  { id: 'computational',name: 'Computational Systems',     broadClass: 'technology', bgColor: '#f0faf6', borderColor: '#aeefd5' },
-];
+export const SUB_TRACK_COLORS = {
+  'Aesthetics':               { bg: '#ede0f8', line: '#a880d8', dot: '#7848c0' },
+  'Phenomenology':            { bg: '#dce8f8', line: '#70a8e0', dot: '#3878c0' },
+  'Spatial Theory':           { bg: '#d4f0ea', line: '#50b8a0', dot: '#1a8870' },
+  'Sensory Studies':          { bg: '#fde0d0', line: '#e89870', dot: '#c85830' },
+  'Environmental Psychology': { bg: '#d8f0d4', line: '#68c068', dot: '#288038' },
+  'Cultural Studies':         { bg: '#f8f0c8', line: '#d8b030', dot: '#a07800' },
+  'Architectural Theory':     { bg: '#fad8e8', line: '#e080b0', dot: '#b83870' },
+  'Urban Systems':            { bg: '#e4d8f8', line: '#9068d0', dot: '#5828b0' },
+};
 
 export const yearSpots = [
   { year: 1849, label: '1849', pos: 1 },
@@ -26,76 +33,9 @@ export const yearSpots = [
   { year: 2025, label: '2025', pos: 96 },
 ];
 
-export const papers = [
-  { id: 'RUSKIN1849', title: 'The Seven Lamps of Architecture', fullTitle: 'The Seven Lamps of Architecture', authors: 'Ruskin, John', venue: 'Smith Elder and Co.', venueType: 'book', url: 'https://openlibrary.org/isbn/9780486261454', citations: 0, respondsTo: 'Absence of an emotional and moral theory of architectural expression.', category: 'foundational', year: 1849, position: 'above', note1: 'P', note2: '2' },
-  { id: 'HEIDEGGER1927', title: 'Being and Time', fullTitle: 'Sein und Zeit', authors: 'Heidegger, Martin', venue: 'Niemeyer', venueType: 'book', url: 'https://openlibrary.org/isbn/9780061575594', citations: 10000, respondsTo: 'Absence of ontological analysis of everyday being-in-the-world.', category: 'foundational', year: 1927, position: 'above', note1: 'P', note2: '1' },
-  { id: 'TANIZAKI1933', title: 'In Praise of Shadows', fullTitle: 'In\'ei Raisan (In Praise of Shadows)', authors: 'Tanizaki, Junichiro', venue: 'Leete\'s Island Books', venueType: 'book', url: 'https://openlibrary.org/isbn/9780865471931', citations: 300, respondsTo: 'Absence of poetic-aesthetic language for shadow and spatial mood.', category: 'architecture', year: 1933, position: 'above', note1: 'P', note2: '2' },
-  { id: 'DEWEY1934', title: 'Art as Experience', fullTitle: 'Art as Experience', authors: 'Dewey, John', venue: 'Minton Balch and Company', venueType: 'book', url: 'https://openlibrary.org/isbn/9780399501630', citations: 0, respondsTo: 'Segregation of art from ordinary life experience.', category: 'foundational', year: 1934, position: 'above', note1: 'P', note2: '2' },
-  { id: 'MERLEAUPONTY1945', title: 'Phenomenology of Perception', fullTitle: 'Phénoménologie de la perception', authors: 'Merleau-Ponty, Maurice', venue: 'Gallimard', venueType: 'book', url: 'https://openlibrary.org/isbn/9780415834339', citations: 5000, respondsTo: 'Objective body vs lived body in perception.', category: 'foundational', year: 1945, position: 'above', note1: 'P', note2: '1' },
-  { id: 'HEIDEGGER1951', title: 'Building Dwelling Thinking', fullTitle: 'Bauen Wohnen Denken', authors: 'Heidegger, Martin', venue: 'Vorträge und Aufsätze', venueType: 'book', url: 'https://www.jstor.org/stable/2311234', citations: 0, respondsTo: 'Reduction of dwelling to mere housing.', category: 'foundational', year: 1951, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'BACHELARD1957', title: 'The Poetics of Space', fullTitle: 'La Poétique de l\'Espace', authors: 'Bachelard, Gaston', venue: 'Presses Universitaires de France', venueType: 'book', url: 'https://openlibrary.org/isbn/9780143107521', citations: 0, respondsTo: 'Absence of a phenomenology of the domestic interior.', category: 'foundational', year: 1957, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'LYNCH1960', title: 'The Image of the City', fullTitle: 'The Image of the City', authors: 'Lynch, Kevin', venue: 'MIT Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9780262620017', citations: 0, respondsTo: 'How inhabitants cognitively map and perceive city form.', category: 'urban', year: 1960, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'BAUDRILLARD1968', title: 'The System of Objects', fullTitle: 'Le Système des objets', authors: 'Baudrillard, Jean', venue: 'Gallimard', venueType: 'book', url: 'https://openlibrary.org/isbn/9781859840689', citations: 3000, respondsTo: 'Interior atmosphere as a function of object-signs and consumer culture.', category: 'urban', year: 1968, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'BOHME1968', title: 'Der Gefühlsraum', fullTitle: 'Der Gefühlsraum', authors: 'Böhme, Gernot', venue: 'Jahrbuch für Phänomenologische Forschung', venueType: 'journal', url: 'https://www.jstor.org/stable/j.ctv10t93q8', citations: 50, respondsTo: 'First systematic ontological definition of atmosphere as tuned space.', category: 'foundational', year: 1968, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'SOUTHWORTH1969', title: 'The Sonic Environment of Cities', fullTitle: 'The Sonic Environment of Cities', authors: 'Southworth, Michael', venue: 'Environment and Behavior', venueType: 'journal', url: '10.1177/001391656900100104', citations: 0, respondsTo: 'First scientific use of the term soundscape.', category: 'urban', year: 1969, position: 'above', note1: 'Ph', note2: '5' },
-  { id: 'APPLETON1975', title: 'The Experience of Landscape', fullTitle: 'The Experience of Landscape', authors: 'Appleton, Jay', venue: 'John Wiley & Sons', venueType: 'book', url: 'https://openlibrary.org/isbn/9780471032564', citations: 0, respondsTo: 'Introduces prospect-refuge theory.', category: 'urban', year: 1975, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'SCHAFER1977', title: 'The Soundscape', fullTitle: 'The Soundscape: Our Sonic Environment and the Tuning of the World', authors: 'Schafer, R. Murray', venue: 'Destiny Books', venueType: 'book', url: 'https://openlibrary.org/isbn/9780892814558', citations: 500, respondsTo: 'Establishes the acoustic ecology movement.', category: 'architecture', year: 1977, position: 'above', note1: 'Ph', note2: '2' },
-  { id: 'TUAN1977', title: 'Space and Place', fullTitle: 'Space and Place: The Perspective of Experience', authors: 'Tuan, Yi-Fu', venue: 'University of Minnesota Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9780816638772', citations: 0, respondsTo: 'Absence of account of how humans transform space into place.', category: 'urban', year: 1977, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'GIBSON1979', title: 'Ecological Approach', fullTitle: 'The Ecological Approach to Visual Perception', authors: 'Gibson, James J.', venue: 'Houghton Mifflin', venueType: 'book', url: 'https://openlibrary.org/isbn/9781848729032', citations: 1000, respondsTo: 'Introduces the theory of affordances.', category: 'foundational', year: 1979, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'NORBERGSCHULZ1980', title: 'Genius Loci', fullTitle: 'Genius Loci: Towards a Phenomenology of Architecture', authors: 'Norberg-Schulz, Christian', venue: 'Rizzoli', venueType: 'book', url: 'https://openlibrary.org/isbn/9780847802876', citations: 0, respondsTo: 'Shift from abstract space to localized spirit of place.', category: 'urban', year: 1980, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'RUSSELL1980', title: 'Circumplex Model of Affect', fullTitle: 'A circumplex model of affect', authors: 'Russell, James A.', venue: 'Journal of Personality and Social Psychology', venueType: 'journal', url: '10.1037/h0077714', citations: 0, respondsTo: 'Organizing affective states along continuous dimensions.', category: 'urban', year: 1980.3, position: 'above', note1: 'Ph', note2: '4' },
-  { id: 'CERTEAU1984', title: 'Practice of Everyday Life', fullTitle: 'L\'invention du quotidien', authors: 'de Certeau, Michel', venue: 'University of California Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9780520236998', citations: 0, respondsTo: 'How ordinary people navigate urban space through practice.', category: 'urban', year: 1984, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'ULRICH1984', title: 'View through a Window', fullTitle: 'View through a window may influence recovery from surgery', authors: 'Ulrich, Roger S.', venue: 'Science', venueType: 'journal', url: '10.1126/science.6143402', citations: 0, respondsTo: 'Visual landscape quality has physiological consequences.', category: 'urban', year: 1984.3, position: 'above', note1: 'Ph', note2: '4' },
-  { id: 'KAPLAN1989', title: 'Attention Restoration Theory', fullTitle: 'The Experience of Nature: A Psychological Perspective', authors: 'Kaplan, Rachel; Kaplan, Stephen', venue: 'Cambridge University Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9780521341394', citations: 0, respondsTo: 'Restorative benefits of nature through attentional mechanisms.', category: 'urban', year: 1989, position: 'above', note1: 'Ph', note2: '1' },
-  { id: 'ULRICH1991', title: 'Stress Recovery Theory', fullTitle: 'Stress recovery during exposure to natural and urban environments', authors: 'Ulrich, Roger S. et al.', venue: 'Journal of Environmental Psychology', venueType: 'journal', url: '10.1016/S0272-4944(05)80184-7', citations: 0, respondsTo: 'Natural environments trigger faster physiological recovery from stress.', category: 'urban', year: 1991, position: 'above', note1: 'F', note2: '4' },
-  { id: 'BOHME1992', title: 'The Aesthetics of Environment', fullTitle: 'Atmosphere as the Fundamental Concept of a New Aesthetics', authors: 'Böhme, Gernot', venue: 'Thesis Eleven', venueType: 'journal', url: '10.1177/072551369303600107', citations: 300, respondsTo: 'Relational theory of atmosphere as the core of ecological aesthetics.', category: 'foundational', year: 1992, position: 'above', note1: 'F', note2: '2' },
-  { id: 'BOHME1993', title: 'Atmosphere as Subject Matter', fullTitle: 'Atmosphere as the Subject Matter of Architecture', authors: 'Böhme, Gernot', venue: 'AA Files', venueType: 'journal', url: 'https://www.jstor.org/stable/29543853', citations: 100, respondsTo: 'Ontological status of atmosphere in architectural space.', category: 'foundational', year: 1993, position: 'above', note1: 'F', note2: '1' },
-  { id: 'HOLL1994', title: 'Questions of Perception', fullTitle: 'Questions of Perception: Phenomenology of Architecture', authors: 'Holl, Steven; Pallasmaa, Juhani; Pérez-Gómez, Alberto', venue: 'A+U', venueType: 'book', url: 'https://openlibrary.org/isbn/9784900211483', citations: 0, respondsTo: 'Phenomenology as a design tool.', category: 'architecture', year: 1994, position: 'above', note1: 'F', note2: '3' },
-  { id: 'PALLASMAA1996', title: 'Eyes of the Skin', fullTitle: 'The Eyes of the Skin: Architecture and the Senses', authors: 'Pallasmaa, Juhani', venue: 'Academy Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9780470015780', citations: 300, respondsTo: 'Ocularcentrism in architectural design.', category: 'architecture', year: 1996, position: 'above', note1: 'F', note2: '3' },
-  { id: 'BULL2000', title: 'Sounding Out the City', fullTitle: 'Sounding Out the City: Personal Stereos and the Management of Everyday Life', authors: 'Bull, Michael', venue: 'Berg Publishers', venueType: 'book', url: 'https://openlibrary.org/isbn/9781859733424', citations: 0, respondsTo: 'Personal audio technologies reconfiguring urban atmosphere.', category: 'urban', year: 2000, position: 'above', note1: 'F', note2: '1' },
-  { id: 'TRUAX2001', title: 'Acoustic Communication', fullTitle: 'Acoustic Communication', authors: 'Truax, Barry', venue: 'Ablex Publishing', venueType: 'book', url: 'https://openlibrary.org/isbn/9781567505375', citations: 0, respondsTo: 'Listener-centred acoustic ecology framework.', category: 'urban', year: 2001, position: 'above', note1: 'F', note2: '5' },
-  { id: 'THIBAUD2002', title: 'Urban Ambiances', fullTitle: 'The Sensory Fabric of Urban Ambiances', authors: 'Thibaud, Jean-Paul', venue: 'Ambiances', venueType: 'journal', url: '10.4000/ambiances.227', citations: 55, respondsTo: 'Defines urban ambiance research.', category: 'urban', year: 2002, position: 'above', note1: 'F', note2: '4' },
-  { id: 'BOHME2004', title: 'Building Breathing Space', fullTitle: 'Building Breathing Space', authors: 'Böhme, Gernot', venue: 'Arcadia', venueType: 'journal', url: 'https://www.jstor.org/stable/j.ctv10t93q8', citations: 50, respondsTo: 'Atmosphere as a medium between subjects and objects.', category: 'foundational', year: 2004, position: 'above', note1: 'F', note2: '2' },
-  { id: 'BOHME2005', title: 'Atmosphere as Subject Matter of Architecture', fullTitle: 'Atmosphere as the Subject Matter of Architecture', authors: 'Böhme, Gernot', venue: 'AA Files', venueType: 'journal', url: 'https://www.jstor.org/stable/29544458', citations: 100, respondsTo: 'Atmosphere as a bridge between the physical and the psychological.', category: 'architecture', year: 2005, position: 'above', note1: 'F', note2: '3' },
-  { id: 'ZUMTHOR2006', title: 'Atmospheres', fullTitle: 'Atmospheres: Architectural Environments - Surrounding Objects', authors: 'Zumthor, Peter', venue: 'Birkhäuser', venueType: 'book', url: 'https://openlibrary.org/isbn/9783764374952', citations: 200, respondsTo: 'Qualitative manifestos for atmospheric design.', category: 'architecture', year: 2006, position: 'above', note1: 'F', note2: '3' },
-  { id: 'KANG2006', title: 'Urban Sound Environment', fullTitle: 'Urban Sound Environment', authors: 'Kang, Jian', venue: 'Taylor & Francis', venueType: 'book', url: 'https://openlibrary.org/isbn/9780415358576', citations: 0, respondsTo: 'Framework for evaluating and designing urban soundscapes.', category: 'urban', year: 2006, position: 'above', note1: 'F', note2: '5' },
-  { id: 'PEREZGOMEZ2006', title: 'Built upon Love', fullTitle: 'Built upon Love: Architectural Longing after Ethics and Aesthetics', authors: 'Pérez-Gómez, Alberto', venue: 'MIT Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9780262162388', citations: 0, respondsTo: 'Atmosphere as a communicative realm bridging ethical and poetic.', category: 'foundational', year: 2006, position: 'above', note1: 'F', note2: '2' },
-  { id: 'INGOLD2007', title: 'Lines: A Brief History', fullTitle: 'Lines: A Brief History', authors: 'Ingold, Tim', venue: 'Routledge', venueType: 'book', url: 'https://openlibrary.org/isbn/9780415424271', citations: 0, respondsTo: 'How atmospheres are woven through movement and traces.', category: 'foundational', year: 2007, position: 'above', note1: 'F', note2: '2' },
-  { id: 'ANDERSON2008', title: 'Engineering Affective Atmospheres', fullTitle: 'For Space', authors: 'Anderson, Ben', venue: 'Progress in Human Geography', venueType: 'journal', url: '10.1177/0309132508105001', citations: 273, respondsTo: 'Gap between meteorological and affective senses of atmosphere.', category: 'urban', year: 2008, position: 'above', note1: 'F', note2: '1' },
-  { id: 'ANDERSON2009', title: 'Affective Atmospheres', fullTitle: 'Affective atmospheres', authors: 'Anderson, Ben', venue: 'Emotion Space and Society', venueType: 'journal', url: '10.1016/j.emospa.2009.08.005', citations: 1237, respondsTo: 'Atmosphere as a relational, quasi-material phenomenon.', category: 'urban', year: 2009, position: 'above', note1: 'F', note2: '1' },
-  { id: 'PINK2009', title: 'Doing Sensory Ethnography', fullTitle: 'Doing Sensory Ethnography', authors: 'Pink, Sarah', venue: 'SAGE Publications', venueType: 'book', url: 'https://openlibrary.org/isbn/9781412948036', citations: 3500, respondsTo: 'Foundational ethnographic infrastructure for atmosphere research.', category: 'urban', year: 2009.3, position: 'above', note1: 'F', note2: '5' },
-  { id: 'GEHL2010', title: 'Cities for People', fullTitle: 'Cities for People', authors: 'Gehl, Jan', venue: 'Island Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9781597267144', citations: 0, respondsTo: 'Designing at eye-level to foster urban vitality and mood.', category: 'urban', year: 2010, position: 'above', note1: 'F', note2: '1' },
-  { id: 'LABELLE2010', title: 'Acoustic Territories', fullTitle: 'Acoustic Territories: Sound Culture and Everyday Life', authors: 'LaBelle, Brandon', venue: 'Continuum', venueType: 'book', url: 'https://openlibrary.org/isbn/9781441167408', citations: 0, respondsTo: 'Sound as a generator of social and spatial atmosphere.', category: 'architecture', year: 2010, position: 'above', note1: 'F', note2: '2' },
-  { id: 'WEINTHAL2012', title: 'Curtains and Soft Architecture', fullTitle: 'Toward a New Interior', authors: 'Weinthal, Lois', venue: 'Princeton Architectural Press', venueType: 'book', url: 'https://openlibrary.org/isbn/9781611330007', citations: 30, respondsTo: 'Textile-based material elements in domestic atmospheric research.', category: 'architecture', year: 2012, position: 'above', note1: 'M', note2: '3' },
-  { id: 'NAIK2014STREETSCORE', title: 'Streetscore', fullTitle: 'Streetscore: Predicting the Perceived Safety of Urban Appearance', authors: 'Naik, Nikhil; Philipoom, Jade; Raskar, Ramesh; Hidalgo, César', venue: 'CVPR', venueType: 'conference', url: '10.1109/CVPRW.2014.121', citations: 0, respondsTo: 'Predicting human perceptual judgments from street-level imagery.', category: 'computational', year: 2014, position: 'above', note1: 'M', note2: '6' },
-  { id: 'SALAMON2014URBANSOUND', title: 'UrbanSound Dataset', fullTitle: 'A Dataset and Taxonomy for Urban Sound Research', authors: 'Salamon, Justin; Jacoby, Christopher; Bello, Juan Pablo', venue: 'ACM MM', venueType: 'conference', url: '10.1145/2647868.2655045', citations: 0, respondsTo: 'Standardized benchmark corpus for urban acoustic classification.', category: 'computational', year: 2014.3, position: 'above', note1: 'M', note2: '6' },
-  { id: 'HENSHAW2014', title: 'Urban Smellscapes', fullTitle: 'Urban Smellscapes: Understanding and Designing City Smell Environments', authors: 'Henshaw, Victoria', venue: 'Routledge', venueType: 'book', url: 'https://openlibrary.org/isbn/9780415815321', citations: 0, respondsTo: 'Smellwalk methodology as olfactory analogue to soundwalk.', category: 'urban', year: 2014, position: 'above', note1: 'M', note2: '5' },
-  { id: 'ISO12913_1_2014', title: 'ISO 12913-1', fullTitle: 'Acoustics - Soundscape - Part 1: Definition and conceptual framework', authors: 'ISO/TC 43/SC 1', venue: 'ISO', venueType: 'standard', url: 'https://www.iso.org/standard/52161.html', citations: 0, respondsTo: 'Standardizes soundscape definition.', category: 'urban', year: 2014.3, position: 'above', note1: 'M', note2: '5' },
-  { id: 'BORCH2014', title: 'Architectural Atmospheres', fullTitle: 'Architectural Atmospheres: On the Experience and Politics of Architecture', authors: 'Borch, Christian', venue: 'Birkhäuser', venueType: 'book', url: 'https://openlibrary.org/isbn/9783038215127', citations: 0, respondsTo: 'Political and social agency of atmospheres in design.', category: 'architecture', year: 2014, position: 'above', note1: 'M', note2: '3' },
-  { id: 'GRIFFERO2014', title: 'Atmospheres: Aesthetics of Emotional Spaces', fullTitle: 'Atmospheres: Aesthetics of Emotional Spaces', authors: 'Griffero, Tonino', venue: 'Ashgate', venueType: 'book', url: 'https://openlibrary.org/isbn/9781472421722', citations: 150, respondsTo: 'Pathic perception and the emotional authority of space.', category: 'foundational', year: 2014, position: 'above', note1: 'M', note2: '2' },
-  { id: 'THIBAUD2015', title: 'Researching in Atmospheres', fullTitle: 'Researching in Atmospheres', authors: 'Thibaud, Jean-Paul', venue: 'Ambiances', venueType: 'journal', url: '10.4000/ambiances.567', citations: 80, respondsTo: 'Video ethnography as method for capturing shifted atmospheres.', category: 'urban', year: 2015, position: 'above', note1: 'M', note2: '5' },
-  { id: 'QUERCIA2015SMELLYMAPS', title: 'Smelly Maps', fullTitle: 'Smelly Maps: The Digital Life of Urban Smell', authors: 'Quercia, Daniele; Schifanella, Rossano; Aiello, Luca Maria; McLean, Kate', venue: 'ICWSM', venueType: 'conference', url: 'https://arxiv.org/abs/1505.06851', citations: 0, respondsTo: 'Methods for mapping non-visual sensory dimensions of urban atmosphere.', category: 'computational', year: 2015, position: 'above', note1: 'M', note2: '6' },
-  { id: 'THIBAUD2015BACKSTAGE', title: 'Backstage of Urban Ambiances', fullTitle: 'The Backstage of Urban Ambiances', authors: 'Thibaud, Jean-Paul', venue: 'Ambiances', venueType: 'journal', url: '10.4000/ambiances.616', citations: 95, respondsTo: 'Ambiance in the mundane, everyday flow of sensory experience.', category: 'urban', year: 2015.3, position: 'above', note1: 'M', note2: '4' },
-  { id: 'PALLASMAA2016', title: 'The Architecture of Atmosphere', fullTitle: 'The Architecture of Atmosphere', authors: 'Pallasmaa, Juhani', venue: 'Tapio Wirkkala Rut Bryk Foundation', venueType: 'book', url: 'https://openlibrary.org/isbn/9789526845609', citations: 50, respondsTo: 'Synthesis of multisensory design.', category: 'architecture', year: 2016, position: 'above', note1: 'M', note2: '3' },
-  { id: 'AUMETZ2016SOUNDSCAPEDESCRIPTORS', title: 'Soundscape Descriptors', fullTitle: 'Soundscape descriptors and a conceptual framework for multisource environment', authors: 'Aumond, Pierre et al.', venue: 'Applied Acoustics', venueType: 'journal', url: '10.1016/j.apacoust.2016.05.018', citations: 0, respondsTo: 'Framework linking acoustic environment to perceptual response.', category: 'urban', year: 2016, position: 'above', note1: 'M', note2: '5' },
-  { id: 'DUBEY2016DEEPLEARNING', title: 'Deep Learning the City', fullTitle: 'Deep Learning the City: Quantifying Urban Perception at a Global Scale', authors: 'Dubey, Abhimanyu et al.', venue: 'ECCV', venueType: 'conference', url: '10.1007/978-3-319-46448-0_12', citations: 0, respondsTo: 'Measuring subjective urban perception using deep learning.', category: 'computational', year: 2016, position: 'above', note1: 'M', note2: '6' },
-  { id: 'BOHME2017', title: 'Atmospheric Architectures', fullTitle: 'Atmospheric Architectures: The Aesthetics of Architecture', authors: 'Böhme, Gernot', venue: 'Bloomsbury', venueType: 'book', url: 'https://openlibrary.org/isbn/9781474258081', citations: 200, respondsTo: 'Comprehensive theory of architecture as the art of atmosphere.', category: 'foundational', year: 2017, position: 'above', note1: 'M', note2: '1' },
-  { id: 'BOHME2017PHENOMENOLOGY', title: 'The Critique of Aesthetic Capitalism', fullTitle: 'The Critique of Aesthetic Capitalism', authors: 'Böhme, Gernot', venue: 'Bloomsbury', venueType: 'book', url: 'https://openlibrary.org/isbn/9781474258418', citations: 0, respondsTo: 'Political economy of atmospheric production.', category: 'foundational', year: 2017.3, position: 'above', note1: 'M', note2: '1' },
-  { id: 'SCHROER2017', title: 'Urban Atmospheres', fullTitle: 'Atmospheres: Experiences Rituals and Sensory Surroundings', authors: 'Schroer, Sara Asu; Schmitt, Jean-Paul', venue: 'Routledge', venueType: 'book', url: 'https://openlibrary.org/isbn/9781138676640', citations: 60, respondsTo: 'Political and materialist critique of phenomenological atmosphere.', category: 'urban', year: 2017, position: 'above', note1: 'M', note2: '1' },
-  { id: 'GRIFFERO2017', title: 'Quasi-Things', fullTitle: 'Quasi-Things: The Paradigm of Atmospheres', authors: 'Griffero, Tonino', venue: 'SUNY Press', venueType: 'book', url: 'https://philpapers.org/rec/GRIQTP', citations: 36, respondsTo: 'Ontology of atmospheres as quasi-things.', category: 'foundational', year: 2016.8, position: 'above', note1: 'M', note2: '2' },
-  { id: 'DELLANTO2018', title: 'The Political Power of Atmosphere', fullTitle: 'The Political Power of Atmosphere', authors: 'Dell\'Anto, Stefano', venue: 'Palgrave Macmillan', venueType: 'book', url: 'https://openlibrary.org/isbn/9783319914619', citations: 0, respondsTo: 'Atmosphere as an instrument of social control and power.', category: 'urban', year: 2018, position: 'above', note1: 'M', note2: '1' },
-  { id: 'ISO12913_2_2018', title: 'ISO 12913-2', fullTitle: 'Acoustics - Soundscape - Part 2: Data collection and reporting requirements', authors: 'ISO/TC 43/SC 1', venue: 'ISO', venueType: 'standard', url: 'https://www.iso.org/standard/75267.html', citations: 0, respondsTo: 'Standardizes soundscape data collection.', category: 'urban', year: 2018.3, position: 'above', note1: 'M', note2: '5' },
-  { id: 'ISO12913_3_2019', title: 'ISO 12913-3', fullTitle: 'Acoustics - Soundscape - Part 3: Data analysis', authors: 'ISO/TC 43/SC 1', venue: 'ISO', venueType: 'standard', url: 'https://www.iso.org/standard/75268.html', citations: 0, respondsTo: 'Standardizes soundscape data analysis.', category: 'urban', year: 2019, position: 'above', note1: 'C', note2: '5' },
-  { id: 'ZHAO2023SENSING', title: 'Sensing Urban Soundscapes from SVI', fullTitle: 'Sensing urban soundscapes from street view imagery', authors: 'Zhao T. et al.', venue: 'Computers Environment and Urban Systems', venueType: 'journal', url: 'https://doi.org/10.1016/j.compenvurbsys.2022.101915', citations: 0, respondsTo: 'Predicting multi-indicator urban soundscapes without ground acoustic measurement.', category: 'computational', year: 2023, position: 'below-low', note1: 'C', note2: '6' },
-  { id: 'CHENG2024SPATIALRGPT', title: 'SpatialRGPT', fullTitle: 'SpatialRGPT: Grounded Spatial Reasoning in Vision-Language Models', authors: 'Cheng, An-Chieh et al.', venue: 'NeurIPS', venueType: 'conference', url: 'https://arxiv.org/abs/2406.01584', citations: 0, respondsTo: 'Region-aware depth-integrated architecture for quantitative spatial perception.', category: 'computational', year: 2024, position: 'above', note1: 'C', note2: '6' },
-  { id: 'FERNANDEZVELASCO2025', title: 'What are atmospheres?', fullTitle: 'What are atmospheres?', authors: 'Fernandez Velasco, Pablo et al.', venue: 'The Philosophical Quarterly', venueType: 'journal', url: 'https://doi.org/10.1093/pq/pqaf024', citations: 0, respondsTo: 'Challenges affordance-based atmosphere theories.', category: 'foundational', year: 2025, position: 'above', note1: 'C', note2: '1' },
-  { id: 'SUN2025CITYVLM', title: 'City-VLM', fullTitle: 'City-VLM: Towards Multidomain Perception Scene Understanding via Multimodal Incomplete Learning', authors: 'Sun, Penglei et al.', venue: 'ACM MM', venueType: 'conference', url: 'https://dl.acm.org/doi/abs/10.1145/3746027.3755088', citations: 0, respondsTo: 'Unified VLM for multi-hop reasoning across aerial and street-level data.', category: 'computational', year: 2025, position: 'above-high', note1: 'C', note2: '6' }
-];
-
 export const getPercentageForYear = (year) => {
   if (year <= yearSpots[0].year) return yearSpots[0].pos;
   if (year >= yearSpots[yearSpots.length - 1].year) return yearSpots[yearSpots.length - 1].pos;
-
   for (let i = 0; i < yearSpots.length - 1; i++) {
     const min = yearSpots[i];
     const max = yearSpots[i + 1];
@@ -106,3 +46,36 @@ export const getPercentageForYear = (year) => {
   }
   return 0;
 };
+
+// Add small decimal offsets to papers sharing the same year within the same
+// sub-track band so their dots don't render on identical pixel positions.
+function computeYearOffsets(records) {
+  const groups = {};
+  records.forEach(p => {
+    const key = `${p.broad_track}::${p.sub_track}::${p.year}`;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(p.work_id);
+  });
+  const offsets = {};
+  Object.values(groups).forEach(ids => {
+    ids.forEach((id, i) => { offsets[id] = i * 0.3; });
+  });
+  return offsets;
+}
+
+const yearOffsets = computeYearOffsets(jsonRaw);
+
+export const papers = jsonRaw.map(p => ({
+  id:          p.work_id,
+  broad_track: p.broad_track,
+  sub_track:   p.sub_track,
+  title:       p.short_title,
+  fullTitle:   p.full_title,
+  authors:     p.authors,
+  venue:       p.venue,
+  venueType:   p.venue_type,
+  url:         p.doi_or_url,
+  citations:   0,
+  respondsTo:  p.responds_to,
+  year:        p.year + (yearOffsets[p.work_id] ?? 0),
+}));

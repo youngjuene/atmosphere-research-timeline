@@ -22,20 +22,21 @@ JSON_FILE = os.path.join(os.path.dirname(__file__), 'atmosphere_timeline_dataset
 UPDATE_SCRIPT = os.path.join(os.path.dirname(__file__), 'update_data.py')
 
 VALID_BROAD_TRACKS = {
-    'Foundational Theory',
-    'Architecture & Design',
-    'Urban & Social Science',
-    'Computational Systems',
+    'Philosophy',
+    'Urban Studies',
+    'Architecture',
+    'Computation',
 }
 
 VALID_SUB_TRACKS = {
-    'Philosophy', 'Spatial Theory',
-    'Aesthetic', 'Artistic Exploration',
-    'Architectural Practice',
-    'Empirical Research',
-    'Research Methodology',
-    'Artificial Intelligence',
-    'Automated Sensing',
+    'Aesthetics',
+    'Phenomenology',
+    'Spatial Theory',
+    'Sensory Studies',
+    'Environmental Psychology',
+    'Cultural Studies',
+    'Architectural Theory',
+    'Urban Systems',
 }
 
 REQUIRED_FIELDS = {'work_id', 'year', 'broad_track', 'sub_track', 'authors', 'short_title', 'full_title'}
@@ -142,13 +143,12 @@ class JSONHandler(FileSystemEventHandler):
         errors = validate_json(JSON_FILE)
 
         if errors:
-            print(f"  ✗ {len(errors)} problem(s) found — visualization not updated:\n")
+            print(f"  ✗ {len(errors)} problem(s) found — fix before the browser reflects changes:\n")
             for e in errors:
                 print(f"    • {e}")
             print("\n  Fix the issues above and save again.")
         else:
-            print("  ✓ Format valid — updating visualization...")
-            run_update()
+            print("  ✓ Valid — Vite will hot-reload the browser automatically.")
 
 
 if __name__ == '__main__':
@@ -162,7 +162,7 @@ if __name__ == '__main__':
     observer.start()
 
     print(f"Watching  {os.path.basename(JSON_FILE)}")
-    print(f"Updating  src/data.js on clean saves")
+    print(f"Validating on every save — Vite hot-reloads the browser automatically.")
     print(f"Press Ctrl+C to stop.\n")
 
     try:

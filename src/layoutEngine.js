@@ -1,27 +1,30 @@
 /**
  * Timeline Label Layout Engine
  *
- * For each category (track), greedily assigns every paper a vertical slot
+ * For each sub-track band, greedily assigns every paper a vertical slot
  * and an optional horizontal label offset so that no two labels overlap.
  *
- * Adding a new paper to data.js requires no manual positioning — the engine
+ * Adding or removing a paper requires no manual positioning — the engine
  * recomputes everything automatically.
  *
  * Algorithm
  * ---------
  * Papers are processed left-to-right (sorted by year).
- * For each paper the engine tries every combination of:
- *   slot  × shift
- * in preference order and picks the first one whose label rectangle does
- * not intersect any already-placed label in that slot.
+ * For each paper the engine works through a pre-scored list of
+ *   (slot, horizontal-shift) candidates ordered by total "disturbance":
  *
- * The row height is then derived from whichever slots were actually used,
- * so rows expand only as much as needed.
+ *   cost = SLOT_LEVEL[slot] × 2  +  shift_step_index
+ *
+ * Multiplying slot escalation by 2 means one vertical step costs as much
+ * as two horizontal shift steps, so the engine exhausts small shifts before
+ * jumping to a taller slot — but won't drift arbitrarily far sideways before
+ * using a higher slot.  The first candidate whose label rectangle fits is
+ * chosen; row height grows only as needed.
  */
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-/** Width of the row-content area (total min-width 2200px − 160px category label) */
+/** Width of the row-content area (total min-width 2280px − 240px label column) */
 const CONTENT_WIDTH_PX = 2040;
 
 /**
@@ -39,9 +42,8 @@ const PADDING_PX = 10;
 const GAP_PX = 6;
 
 /**
- * Vertical slots in preference order.
+ * Vertical slots in preference order (inner → outer).
  * Alternating above/below keeps the timeline visually balanced.
- * The engine expands outward only when inner slots are full.
  */
 const SLOTS = [
   'above', 'below',
@@ -62,11 +64,42 @@ const SLOTS = [
 const SLOT_ABOVE_NEED = { 'above': 44, 'above-high': 78, 'above-highest': 112 };
 const SLOT_BELOW_NEED = { 'below': 44, 'below-low':  78, 'below-lowest':  112 };
 
+/** Vertical cost weight per slot level (0 = above/below, 1 = high/low, 2 = highest/lowest) */
+const SLOT_LEVEL = {
+  'above': 0, 'below': 0,
+  'above-high': 1, 'below-low': 1,
+  'above-highest': 2, 'below-lowest': 2,
+};
+
+/** Horizontal shift magnitudes, from tight to wide */
+const SHIFT_MAGNITUDES = [0, 22, 44, 66, 88, 110, 135, 165, 200];
+
 /**
- * Horizontal pixel offsets tried for each slot, in order of preference.
- * 0 (no shift) is always tried first; shifts expand symmetrically outward.
+ * Pre-scored flat list of every (slot, shift) candidate, sorted by
+ *   cost = SLOT_LEVEL[slot] × 2 + shift_step_index
+ * so the engine tries inner slots with modest shifts before escalating
+ * vertically or drifting far sideways.  Ties are broken by slot order
+ * (inner first) then by shift magnitude (smaller first).
  */
-const H_SHIFTS = [0, -22, 22, -44, 44, -66, 66, -88, 88, -110, 110, -135, 135, -165, 165, -200, 200];
+const SEARCH_ORDER = (() => {
+  const candidates = [];
+  SHIFT_MAGNITUDES.forEach((mag, si) => {
+    const directions = mag === 0 ? [0] : [-mag, mag];
+    for (const slot of SLOTS) {
+      for (const shift of directions) {
+        candidates.push({ slot, shift, _cost: SLOT_LEVEL[slot] * 2 + si });
+      }
+    }
+  });
+  candidates.sort((a, b) => {
+    if (a._cost !== b._cost) return a._cost - b._cost;
+    // Within same cost: prefer inner slot, then smaller |shift|
+    const slotDiff = SLOTS.indexOf(a.slot) - SLOTS.indexOf(b.slot);
+    if (slotDiff !== 0) return slotDiff;
+    return Math.abs(a.shift) - Math.abs(b.shift);
+  });
+  return candidates;
+})();
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -92,12 +125,12 @@ function estimateWidthPx(paper) {
 /**
  * Compute collision-free label placements for a set of papers in one track.
  *
- * @param {Array}    papers               Papers belonging to one category
- * @param {Function} getPercentageForYear Maps a year to a 0-100 percentage
+ * @param {Array}    papers               Papers belonging to one sub-track band
+ * @param {Function} getPercentageForYear Maps a year to a 0–100 percentage
  * @returns {{ placements: Object, rowHeight: number, centerOffset: number }}
  *   placements    – { [paper.id]: { position: string, labelOffset: number } }
  *   rowHeight     – minimum row height (px) to fit all placed labels
- *   centerOffset  – px from row top to the timeline centre line (use instead of 50%)
+ *   centerOffset  – px from row top to the timeline centre line
  */
 export function computeLayout(papers, getPercentageForYear) {
   // Sort left-to-right so early papers claim their preferred slots first
@@ -114,70 +147,62 @@ export function computeLayout(papers, getPercentageForYear) {
 
     let placed = false;
 
-    // Prefer staying close to the dot: try small shifts across ALL slots
-    // before trying larger shifts.  This ensures a label placed directly
-    // below (shift=0) beats one shifted 22+px above.
-    outer: for (const shift of H_SHIFTS) {
-      for (const slot of SLOTS) {
-        const lx = cx + shift - hw;
-        const rx = cx + shift + hw;
+    // Walk the pre-scored candidate list: balanced horizontal-vs-vertical priority
+    for (const { slot, shift } of SEARCH_ORDER) {
+      const lx = cx + shift - hw;
+      const rx = cx + shift + hw;
 
-        // Skip if label extends outside the content area
-        if (lx < 0 || rx > CONTENT_WIDTH_PX) continue;
+      if (lx < 0 || rx > CONTENT_WIDTH_PX) continue;
 
-        const free = !occupied[slot].some(
-          ([a, b]) => lx < b + GAP_PX && rx > a - GAP_PX
-        );
-
-        if (free) {
-          occupied[slot].push([lx, rx]);
-          placements[paper.id] = { position: slot, labelOffset: shift };
-          placed = true;
-          break outer;
-        }
+      const free = !occupied[slot].some(([a, b]) => lx < b + GAP_PX && rx > a - GAP_PX);
+      if (free) {
+        occupied[slot].push([lx, rx]);
+        placements[paper.id] = { position: slot, labelOffset: shift };
+        placed = true;
+        break;
       }
     }
 
-    // If no shift kept the label in bounds, try boundary-clamped shifts
+    // Boundary-clamped fallback: label would overflow left/right at every shift
     if (!placed) {
-      outer2: for (const slot of SLOTS) {
-        // Compute the shift needed to keep the label within bounds
-        let clampShift = 0;
-        if (cx - hw < 0) clampShift = hw - cx;                          // push right
-        else if (cx + hw > CONTENT_WIDTH_PX) clampShift = CONTENT_WIDTH_PX - cx - hw; // push left
+      const clampShift = cx - hw < 0
+        ? hw - cx
+        : CONTENT_WIDTH_PX - cx - hw;
 
+      for (const slot of SLOTS) {
         const lx = cx + clampShift - hw;
         const rx = cx + clampShift + hw;
-
-        const free = !occupied[slot].some(
-          ([a, b]) => lx < b + GAP_PX && rx > a - GAP_PX
-        );
-
+        const free = !occupied[slot].some(([a, b]) => lx < b + GAP_PX && rx > a - GAP_PX);
         if (free) {
           occupied[slot].push([lx, rx]);
           placements[paper.id] = { position: slot, labelOffset: clampShift };
           placed = true;
-          break outer2;
+          break;
         }
       }
     }
 
-    // Absolute fallback (only if all 78 slot×shift combinations are blocked)
+    // Absolute fallback (all 102 candidates blocked — extremely unlikely)
     if (!placed) {
       placements[paper.id] = { position: 'above-highest', labelOffset: 0 };
     }
   }
 
-  // Derive the row height from whichever slots were actually assigned
-  let maxAbove = 44, maxBelow = 44;
+  // Derive row height from whichever slots were actually used.
+  // maxBelow starts at 0 so bands where every label sits above don't
+  // waste space — only the 12 px bottom margin is added in that case.
+  let maxAbove = 0, maxBelow = 0;
   Object.values(placements).forEach(({ position }) => {
     maxAbove = Math.max(maxAbove, SLOT_ABOVE_NEED[position] ?? 0);
     maxBelow = Math.max(maxBelow, SLOT_BELOW_NEED[position] ?? 0);
   });
 
+  // Guarantee at least the inner-slot height above (labels always exist),
+  // and a small breathing margin below when no below-labels are placed.
+  maxAbove = Math.max(maxAbove, 44);
+  maxBelow = Math.max(maxBelow, 16);
+
   // Centre line sits 12 px below the topmost label (12 px top margin).
-  // When maxAbove ≠ maxBelow the 50% rule would misplace the line, so we
-  // expose the exact pixel offset and let the row use it explicitly.
   const centerOffset = 12 + maxAbove;
 
   return {
